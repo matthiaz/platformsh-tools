@@ -20,7 +20,7 @@ e.g. Your build hook might look like this
 hooks:
     build: |
         curl -sS https://platform.sh/cli/installer | php
-        curl -x -o block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
+        curl -sS --output block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
 ```
 
 Alternatively, check out the repository and put the code into your own repository. You can modify it as you like. 
@@ -53,7 +53,7 @@ e.g.:
 hooks:
     build: |
         curl -sS https://platform.sh/cli/installer | php
-        curl -x -o block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
+        curl -sS --output block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
 crons:
     blockddos:
         spec: '*/10 * * * *' #every x minutes
