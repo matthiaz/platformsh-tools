@@ -45,3 +45,21 @@ Example:
 - `bash block_ddos.sh 5` 
   - Looks at /var/log/access.log 
   - Blocks all IP's that were seen more than 300 (5x60) times in the previous 60 seconds. 
+
+I'd recommend putting this in a cron that runs every 10 minutes or so. 
+
+e.g.:
+```
+hooks:
+    build: |
+        curl -sS https://platform.sh/cli/installer | php
+        curl -x -o block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
+crons:
+    blockddos:
+        spec: '*/10 * * * *' #every x minutes
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = master ]; then
+                bash block_ddos.sh 1
+            fi
+
+```
