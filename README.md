@@ -30,7 +30,11 @@ Alternatively, check out the repository and put the code into your own repositor
 Some of these tools can be triggered using cron scripts as described here https://docs.platform.sh/configuration/app/cron.html#cron-jobs
 Make sure you set the correct run time. https://crontab.guru/ can be of assistance. 
 
-## block_ddos.sh
+
+
+## Scripts
+
+### block_ddos.sh
 This script can be used to automatically block ip addresses using the `platform environment:http-access` tool.
 
 *IMPORTANT NOTE: This will automatically redeploy your environment. *
@@ -44,7 +48,7 @@ This script can be used to automatically block ip addresses using the `platform 
 #./block_ddos.sh 3600 'now -1hour'
 ```
 
-### examples
+#### examples
 - `bash block_ddos.sh` 
   - Looks at /var/log/access.log 
   - Blocks all IP's that were seen more than 60 times in the previous minute. 
@@ -71,8 +75,9 @@ crons:
 
 ```
 
+-------
 
-## bandwith_stats.sh
+### bandwith_stats.sh
 This script can be used to analyse your access.log and give a good estimation on how much data is being sent. This can be used to determine the right size of a CDN solution (CloudFront, Fastly,...). It is a simple bash script and can be used without needing a platform-cli API key.
 
 
@@ -83,7 +88,7 @@ This script can be used to analyse your access.log and give a good estimation on
 #./bandwith_stats.sh
 ```
 
-### examples 
+#### examples 
 `curl -sS https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh | bash` 
 
 Or if you want to download it
@@ -92,3 +97,4 @@ Or if you want to download it
 
 You don't have to download it, you can simply pipe the script straight to curl as per the first example.
   
+-------
