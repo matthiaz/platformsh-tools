@@ -35,18 +35,25 @@ This script can be used to automatically block ip addresses using the `platform 
 
 *IMPORTANT NOTE: This will automatically redeploy your environment. *
 
-`block_ddos [MAX_REQUESTS_PER_SECONDS]`
+```
+#./block_ddos.sh [MAX_ALLOWED_REQUESTS=60] [PERIOD='last minute']
+#./block_ddos.sh
+#./block_ddos.sh 60
+#./block_ddos.sh 60 'last minute'
+#./block_ddos.sh 3600 'last hour'
+#./block_ddos.sh 3600 'now -1hour'
+```
 
 Example: 
 - `bash block_ddos.sh` 
   - Looks at /var/log/access.log 
-  - Blocks all IP's that were seen more than 60 times in the previous 60 seconds. 
+  - Blocks all IP's that were seen more than 60 times in the previous minute. 
   
-- `bash block_ddos.sh 5` 
+- `bash block_ddos.sh 300` 
   - Looks at /var/log/access.log 
-  - Blocks all IP's that were seen more than 300 (5x60) times in the previous 60 seconds. 
+  - Blocks all IP's that were seen more than 300 times in the previous minute. 
 
-I'd recommend putting this in a cron that runs every 10 minutes or so. 
+You could run the script manually or you could put it in a cron that runs every 15 minutes or so. 
 
 e.g.:
 ```
@@ -56,10 +63,10 @@ hooks:
         curl -sS --output block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
 crons:
     blockddos:
-        spec: '*/10 * * * *' #every x minutes
+        spec: '*/15 * * * *' #every x minutes
         cmd: |
             if [ "$PLATFORM_BRANCH" = master ]; then
-                bash block_ddos.sh 1
+                bash block_ddos.sh 1000 'now -15minutes'
             fi
 
 ```
