@@ -44,7 +44,7 @@ This script can be used to automatically block ip addresses using the `platform 
 #./block_ddos.sh 3600 'now -1hour'
 ```
 
-Example: 
+### examples
 - `bash block_ddos.sh` 
   - Looks at /var/log/access.log 
   - Blocks all IP's that were seen more than 60 times in the previous minute. 
@@ -70,3 +70,25 @@ crons:
             fi
 
 ```
+
+
+## bandwith_stats.sh
+This script can be used to analyse your access.log and give a good estimation on how much data is being sent. This can be used to determine the right size of a CDN solution (CloudFront, Fastly,...). It is a simple bash script and can be used without needing a platform-cli API key.
+
+
+
+*NOTE: We trim log files, so only the last 100MB of log files will be parsed (usually a few days worth)*
+
+```
+#./bandwith_stats.sh
+```
+
+### examples 
+`curl -sS https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh | bash` 
+
+Or if you want to download it
+
+`curl -sS --output /tmp/bandwith_stats.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh && bash /tmp/bandwith_stats.sh` 
+
+You don't have to download it, you can simply pipe the script straight to curl as per the first example.
+  
