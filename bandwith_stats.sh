@@ -1,0 +1,2 @@
+#!/bin/bash
+awk '{print $4}' /var/log/access.log | cut -d: -f1 | uniq | while read i; do echo "${i:1}:"; grep "${i:1}" /var/log/access.log | awk '{ s += $10 } END { print "Total ", s/1024/1024 " Mb", "- Average Request Size ", s/NR/1024/1024 " Mb", "- Total Hits ", NR }'; echo -e; done; echo -e "\nTotal:"; awk '{ s += $10 } END { print "Total ", s/1024/1024 " Mb", "- Average Request Size ", s/NR/1024/1024 " Mb", "- Total Hits ", NR }' /var/log/access.log
