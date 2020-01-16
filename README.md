@@ -30,7 +30,7 @@ Alternatively, check out the repository and put the code into your own repositor
 Some of these tools can be triggered using cron scripts as described here https://docs.platform.sh/configuration/app/cron.html#cron-jobs
 Make sure you set the correct run time. https://crontab.guru/ can be of assistance. 
 
-
+-------
 
 ## Scripts
 
