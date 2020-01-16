@@ -1,34 +1,34 @@
 #!/bin/bash
-#./block_ddos.sh 1
-MAX_REQUESTS_PER_SECOND=${1:-1} #if no param is given, use 1 request/sec by default
-MAX_REQUESTS_PER_MINUTE=$(($MAX_REQUESTS_PER_SECOND * 60))
-MAX_REQUESTS_PER_HOUR=$(($MAX_REQUESTS_PER_MINUTE * 60 ))
+#./block_ddos.sh [MAX_ALLOWED_REQUESTS] [PERIOD]
+#./block_ddos.sh
+#./block_ddos.sh 60
+#./block_ddos.sh 60 'last minute'
+#./block_ddos.sh 3600 'last hour'
+#./block_ddos.sh 3600 'now -1hour'
 
-echo "MAX REQUESTS PER SECOND $MAX_REQUESTS_PER_SECOND"
-echo "MAX REQUESTS PER MINUTE $MAX_REQUESTS_PER_MINUTE"
-echo "MAX REQUESTS PER HOUR $MAX_REQUESTS_PER_HOUR"
+#!/bin/bash
+MAX_REQUESTS=${1:-60} #if no param is given, use 1 request/sec by default
+VDATE=${2:-last minute}
+
+echo "MAX REQUESTS $MAX_REQUESTS"
+echo "VDATE $VDATE"
 
 
 #get the previous minute, to make grep filter on that
-time_to_filter=$(date +'%d/%b/%Y:%H:%M:' --date='last minute')
-
-#if you want to have a bigger time filter, maybe use last hour like this?
-#time_to_filter=$(date +'%d/%b/%Y:%H:' --date='last hour')
+time_to_filter=$(date +'[%d/%b/%Y:%H:%M:%S' --date="$VDATE")
 
 echo "Time to filter $time_to_filter"
 
 
 
-
 #get the ips that do more requests/minute than we allow
-IPS=$(cat /var/log/access.log | grep $time_to_filter | awk '{count[$1]++}END{for(j in count) print count[j]" " j}')
-FILTERED_IPS=$(cat /var/log/access.log | grep $time_to_filter | awk '{count[$1]++}END{for(j in count) print count[j]" " j}' | awk -v x='$MAX_REQUESTS_PER_MINUTE' '{if($1 > x){print " --access deny:"$2}}' | xargs)
-echo $IPS
-echo $FILTERED_IPS
+FILTERED_IPS=$(awk -vDate="$time_to_filter" '$4 > Date {print $0}' /var/log/access.log | awk '{count[$1]++}END{for(j in count) print count[j]" " j}' | sort -r | awk -v x="$MAX_REQUESTS" '{if($1 > x){print " --access deny:"$2}}' | xargs)
+echo "filtered $FILTERED_IPS"
 
 
 #run platform httpaccess to block ip's that appear more than x times
 echo "platform httpaccess --access allow:any $FILTERED_IPS --no-wait --yes"
 platform httpaccess --access allow:any $FILTERED_IPS --no-wait --yes
+
 
 
