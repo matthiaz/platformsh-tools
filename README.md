@@ -20,7 +20,7 @@ e.g. Your build hook might look like this
 hooks:
     build: |
         curl -sS https://platform.sh/cli/installer | php
-        curl -x -o block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
+        curl -sS --output block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
 ```
 
 Alternatively, check out the repository and put the code into your own repository. You can modify it as you like. 
@@ -45,3 +45,21 @@ Example:
 - `bash block_ddos.sh 5` 
   - Looks at /var/log/access.log 
   - Blocks all IP's that were seen more than 300 (5x60) times in the previous 60 seconds. 
+
+I'd recommend putting this in a cron that runs every 10 minutes or so. 
+
+e.g.:
+```
+hooks:
+    build: |
+        curl -sS https://platform.sh/cli/installer | php
+        curl -sS --output block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
+crons:
+    blockddos:
+        spec: '*/10 * * * *' #every x minutes
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = master ]; then
+                bash block_ddos.sh 1
+            fi
+
+```
