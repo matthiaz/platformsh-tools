@@ -14,6 +14,7 @@ hooks:
 ## Installation/Downloading.
 
 Download the tools and commit them to your repository. You can modify it as you like. 
+https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
 
 ## Crons
 
