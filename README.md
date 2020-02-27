@@ -13,17 +13,7 @@ hooks:
 
 ## Installation/Downloading.
 
-You can download the tools by simply using curl.
-
-e.g. Your build hook might look like this
-```
-hooks:
-    build: |
-        curl -sS https://platform.sh/cli/installer | php
-        curl -sS --output block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
-```
-
-Alternatively, check out the repository and put the code into your own repository. You can modify it as you like. 
+Download the tools and commit them to your repository. You can modify it as you like. 
 
 ## Crons
 
@@ -64,7 +54,7 @@ e.g.:
 hooks:
     build: |
         curl -sS https://platform.sh/cli/installer | php
-        curl -sS --output block_ddos.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/block_ddos.sh
+        
 crons:
     blockddos:
         spec: '*/15 * * * *' #every x minutes
@@ -89,11 +79,11 @@ This script can be used to analyse your access.log and give a good estimation on
 ```
 
 #### examples 
-`curl -sS https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh | bash` 
+`curl -L -sS https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh | bash` 
 
 Or if you want to download it
 
-`curl -sS --output /tmp/bandwith_stats.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh && bash /tmp/bandwith_stats.sh` 
+`curl -L -sS --output /tmp/bandwith_stats.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh && bash /tmp/bandwith_stats.sh` 
 
 You don't have to download it, you can simply pipe the script straight to curl as per the first example.
   
