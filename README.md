@@ -87,5 +87,38 @@ Or if you want to download it
 `curl -L -sS --output /tmp/bandwith_stats.sh https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/bandwith_stats.sh && bash /tmp/bandwith_stats.sh` 
 
 You don't have to download it, you can simply pipe the script straight to curl as per the first example.
-  
+
+
+
 -------
+
+
+### add_multiple_domains.sh
+This script can be used to qucikly add lots of domains without having to wait for each deploy
+
+
+#### examples
+
+git clone the repository, you can then run 
+
+`./add_multiple_domains.sh PROJECT_ID ENVIRONMENT_TO_REDEPLOY 'domain1.com,domain2.com,domain3.com'
+
+`./add_multiple_domains.sh tug2vhb33pje6 master 'test001.giveatree.world,test002.giveatree.world,test003.giveatree.world,test004.giveatree.world,test005.giveatree.world,test006.giveatree.world'`
+
+
+-------
+
+
+### delete_multiple_domains.sh
+This script can be used to quickly delete lots of domains without having to wait for each deploy
+
+
+#### examples
+
+git clone the repository, you can then run
+
+`./delete_multiple_domains.sh PROJECT_ID ENVIRONMENT_TO_REDEPLOY 'domain1.com,domain2.com,domain3.com'
+
+`./delete_multiple_domains.sh tug2vhb33pje6 master 'test001.giveatree.world,test002.giveatree.world,test003.giveatree.world,test004.giveatree.world,test005.giveatree.world,test006.giveatree.world'`
+
+
