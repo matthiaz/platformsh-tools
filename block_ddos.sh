@@ -6,7 +6,6 @@
 #./block_ddos.sh 3600 'last hour'
 #./block_ddos.sh 3600 'now -1hour'
 
-#!/bin/bash
 MAX_REQUESTS=${1:-60} #if no param is given, use 1 request/sec by default
 VDATE=${2:-last minute}
 
