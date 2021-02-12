@@ -133,12 +133,12 @@ Building from source with brew is rather slow, but the script will automatically
 
 #### examples
 
-To install `duf` and `lna` you can do this:
+To install `duf` and `lnav` you can do this:
 
 ```
 hooks:
     build: |
         set -e
-        bash install_brew_packages.sh duf lna
+        bash install_brew_packages.sh duf lnav
 ```
 
