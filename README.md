@@ -122,3 +122,23 @@ git clone the repository, you can then run
 `./delete_multiple_domains.sh tug2vhb33pje6 master 'test001.giveatree.world,test002.giveatree.world,test003.giveatree.world,test004.giveatree.world,test005.giveatree.world,test006.giveatree.world'`
 
 
+
+### install_brew_packages.sh
+
+[brew.sh](https://formulae.brew.sh/formula-linux/) is a package manager specifically for macos, but it can also be used to install packages on linux. This allows you to install all sorts of things fairly easy within in the build hook.
+
+All you have to do is copy the `install_brew_packages.sh` file into the root of your project (where your `.platform.app.yaml` lives) and then you can call it in the build hook. The script takes 1 or more arguments. Simply specify the packages you want to install.
+
+Building from source with brew is rather slow, but the script will automatically use the cache folder. This will ensure that the subsequent builds are fast.
+
+#### examples
+
+To install `duf` and `lna` you can do this:
+
+```
+hooks:
+    build: |
+        set -e
+        bash install_brew_packages.sh duf lna
+```
+
