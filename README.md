@@ -122,6 +122,22 @@ git clone the repository, you can then run
 `./delete_multiple_domains.sh tug2vhb33pje6 master 'test001.giveatree.world,test002.giveatree.world,test003.giveatree.world,test004.giveatree.world,test005.giveatree.world,test006.giveatree.world'`
 
 
+-------
+
+
+### delete_multiple_users.sh
+This script can be used to quickly delete lots of users without having to wait for each deploy
+
+
+#### examples
+
+git clone the repository, you can then run
+
+`./delete_multiple_users.sh PROJECT_ID ENVIRONMENT_TO_REDEPLOY 'user1@example.com,user2@example.com,user3@example.com'
+
+`./delete_multiple_users.sh tug2vhb33pje6 master 'test001@giveatree.world,test002@giveatree.world,test003@giveatree.world'`
+
+
 
 ### install_brew_packages.sh
 
