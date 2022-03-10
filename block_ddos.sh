@@ -14,7 +14,7 @@ echo "VDATE $VDATE"
 
 
 #get the previous minute, to make grep filter on that
-time_to_filter=$(date +'[%d/%b/%Y:%H:%M:%S' --date="$VDATE")
+time_to_filter=$(date +'[%d/%b/%Y:%H:%M:%S]' --date="$VDATE")
 
 echo "Time to filter $time_to_filter"
 
