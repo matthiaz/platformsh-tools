@@ -14,7 +14,7 @@ echo "VDATE $VDATE"
 
 
 #get the previous minute, to make grep filter on that
-time_to_filter=$(date +'[%d/%b/%Y:%H:%M:%S' --date="$VDATE")
+time_to_filter=$(date +'[%d/%b/%Y:%H:%M:%S]' --date="$VDATE")
 
 echo "Time to filter $time_to_filter"
 
@@ -26,8 +26,8 @@ echo "filtered $FILTERED_IPS"
 
 
 #run platform httpaccess to block ip's that appear more than x times
-echo "platform httpaccess --access allow:any $FILTERED_IPS --no-wait --yes"
-platform httpaccess --access allow:any $FILTERED_IPS --no-wait --yes
+echo "platform httpaccess $FILTERED_IPS --access allow:any --no-wait --yes"
+platform httpaccess $FILTERED_IPS --access allow:any --no-wait --yes
 
 
 
