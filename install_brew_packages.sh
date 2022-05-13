@@ -65,7 +65,7 @@ install_brew() {
 }
 
 load_brew() {
-    eval $("$PLATFORM_APP_DIR/.linuxbrew/bin/brew shellenv")
+    eval $($PLATFORM_APP_DIR/.linuxbrew/bin/brew shellenv)
     brew analytics off
 }
 
