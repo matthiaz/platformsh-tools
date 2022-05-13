@@ -85,12 +85,13 @@ install_component() {
 }
 
 write_profile() {
-  touch /app/.profile
-  echo 'export HOMEBREW_CELLAR="/app/.linuxbrew/Cellar";' >> /app/.profile
-  echo 'export HOMEBREW_REPOSITORY="/app/.linuxbrew/Homebrew";' >> /app/.profile
-  echo 'export PATH="/app/.linuxbrew/bin:/app/.linuxbrew/sbin${PATH+:$PATH}";' >> /app/.profile
-  echo 'export MANPATH="/app/.linuxbrew/share/man${MANPATH+:$MANPATH}:";' >> /app/.profile
-  echo 'export INFOPATH="/app/.linuxbrew/share/info:${INFOPATH:-}";' >> /app/.profile
+  #touch /app/.profile
+  echo "" > $PLATFORM_APP_DIR/.profile
+  echo 'export HOMEBREW_CELLAR="'$PLATFORM_APP_DIR'/.linuxbrew/Cellar";' >> $PLATFORM_APP_DIR/.profile
+  echo 'export HOMEBREW_REPOSITORY="'$PLATFORM_APP_DIR'/.linuxbrew/Homebrew";' >> $PLATFORM_APP_DIR/.profile
+  echo 'export PATH="'$PLATFORM_APP_DIR'.linuxbrew/bin:'$PLATFORM_APP_DIR'/.linuxbrew/sbin${PATH+:$PATH}";' >> $PLATFORM_APP_DIR/.profile
+  echo 'export MANPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/man${MANPATH+:$MANPATH}:";' >> $PLATFORM_APP_DIR/.profile
+  echo 'export INFOPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/info:${INFOPATH:-}";' >> $PLATFORM_APP_DIR/.profile
 }
 
 echo "Installing: $@"
