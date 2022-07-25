@@ -1,3 +1,5 @@
+#!/bin/bash
+
 run() {
     # Run the compilation process.
 
@@ -86,15 +88,14 @@ install_component() {
 
 write_profile() {
   #touch /app/.profile
-  echo "" > $PLATFORM_APP_DIR/.profile
-  echo 'export HOMEBREW_CELLAR="'$PLATFORM_APP_DIR'/.linuxbrew/Cellar";' >> $PLATFORM_APP_DIR/.profile
-  echo 'export HOMEBREW_REPOSITORY="'$PLATFORM_APP_DIR'/.linuxbrew/Homebrew";' >> $PLATFORM_APP_DIR/.profile
-  echo 'export PATH="'$PLATFORM_APP_DIR'/.linuxbrew/bin:'$PLATFORM_APP_DIR'/.linuxbrew/sbin${PATH+:$PATH}";' >> $PLATFORM_APP_DIR/.profile
-  echo 'export MANPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/man${MANPATH+:$MANPATH}:";' >> $PLATFORM_APP_DIR/.profile
-  echo 'export INFOPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/info:${INFOPATH:-}";' >> $PLATFORM_APP_DIR/.profile
+  echo "" >> $PLATFORM_APP_DIR/.environment
+  echo 'export HOMEBREW_CELLAR="'$PLATFORM_APP_DIR'/.linuxbrew/Cellar";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export HOMEBREW_REPOSITORY="'$PLATFORM_APP_DIR'/.linuxbrew/Homebrew";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export PATH="'$PLATFORM_APP_DIR'/.linuxbrew/bin:'$PLATFORM_APP_DIR'/.linuxbrew/sbin${PATH+:$PATH}";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export MANPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/man${MANPATH+:$MANPATH}:";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export INFOPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/info:${INFOPATH:-}";' >> $PLATFORM_APP_DIR/.environment
+  
 }
 
 echo "Installing: $@"
 run $@
-
-
