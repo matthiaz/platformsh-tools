@@ -1,0 +1,108 @@
+#!/bin/bash
+
+run() {
+    # Run the compilation process.
+    echo "This bash script pretends to be pecl, but it's not. It can only do 'pecl install <package>'"
+
+    cache_folder="${PLATFORM_CACHE_DIR}/.pecl"
+    cache_file="$cache_folder/cached_components"
+    echo "Cache folder $cache_folder"
+    echo "Cache file $cache_file"
+    echo "Current folder $(pwd)"
+
+    # probably exists, but do it anyway
+    mkdir -p $cache_folder
+    cd $cache_folder
+
+    # Check to see if the cache file exists
+    if [ ! -f ${cache_file} ];
+    then
+        echo "" > $cache_file
+    fi
+
+    # check if cache_contents actually matches what we want
+    cache_contents=$(<"$cache_file")
+    if [[ "$cache_contents" != "$@" ]]; then
+        # Not the same components, so reinstall
+        install_components $@
+        copy_lib_to_cache $@
+        echo "$@" > $cache_file
+    else
+        echo "Same components, nothing to be installed"
+    fi
+    write_php_ini $@
+}
+
+copy_lib_to_cache() {
+    echo "Copy to cache... #files copied: "
+    cp -Rvf $PLATFORM_APP_DIR/*.so $PLATFORM_CACHE_DIR/.pecl/ | wc -l
+}
+
+copy_lib_from_cache() {
+    echo "Copy from cache... #files copied: "
+    cp -Rvf $PLATFORM_CACHE_DIR/.pecl/* $PLATFORM_APP_DIR/ | wc -l
+}
+
+install_components() {
+  echo "" > $PLATFORM_APP_DIR/php.ini
+  
+  components_to_install="$@"
+  echo "Installing components: '$components_to_install'"
+  for f in $components_to_install
+  do
+      if [[ "$f" != "install" ]]; then 
+          echo "Installing component: '$f'"
+          install_component $f
+      fi
+  done
+}
+
+install_component() {
+  echo "Installing package $1"
+  
+  mkdir build-dir
+  cd build-dir
+
+  echo "Downloading tarball from pecl"
+  curl -SsL https://pecl.php.net/get/$1 -o $1.tgz
+
+  echo "Unpacking into build-dir folder"
+  tar -xvf $1.tgz
+  rm $1.tgz
+
+  echo "Build $1 lib"
+  mv $1* $1
+  cd $1
+  ls -lsa
+  pwd
+  echo "Run phpize"
+  phpize
+  ./configure
+  make
+
+  echo "Copy modules/$1.so to $PLATFORM_APP_DIR/$1.so"
+  cp modules/$1.so $PLATFORM_APP_DIR/$1.so
+
+  echo "Cleaning up build folder..."
+  cd ../..
+  rm -Rf build-dir
+
+}
+
+write_php_ini() {
+  echo "Writing php.ini."
+  echo "" > $PLATFORM_APP_DIR/php.ini
+  
+  components_to_install="$@"
+  echo "Installing components: '$components_to_install'"
+  for f in $components_to_install
+  do
+      if [[ "$f" != "install" ]]; then 
+          echo "extension=$PLATFORM_APP_DIR/$f.so" >> $PLATFORM_APP_DIR/php.ini
+      fi
+  done
+}
+components_to_install=$(echo "$@" | cut -d ' ' -f 1 --complement)
+echo "Installing: $components_to_install"
+run "$components_to_install"
+echo "Components succesfully installed: $components_to_install"
