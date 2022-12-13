@@ -25,6 +25,28 @@ Make sure you set the correct run time. https://crontab.guru/ can be of assistan
 
 ## Scripts
 
+### pecl
+
+This script can be used as a somewhat replacement to the `pecl install <package>` package manager that is used by php to compile and install custom extensions.
+It doesn't do search, but can compile packages just fine.
+
+Usage:
+  
+Download the sourcecode: https://raw.githubusercontent.com/matthiaz/platformsh-tools/master/pecl and place it in your project root.  
+  
+Then add this as a hook:
+```
+hooks:
+    build: |
+        set -e  
+        chmod +x pecl  
+        pecl install grpc
+```
+  
+It will automatically add a /app/php.ini with the extension requested. First builds will be slow since it compiles the package, but subsequent builds will be cached in PLATFORM_CACHE_DIR automatically.
+
+
+
 ### block_ddos.sh
 This script can be used to automatically block ip addresses using the `platform environment:http-access` tool.
 

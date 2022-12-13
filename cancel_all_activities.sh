@@ -27,4 +27,3 @@ fi
 
 
 cancel_all_activities
-#platform redeploy -p $PROJECT_ID -e $ENVIRONMENT
