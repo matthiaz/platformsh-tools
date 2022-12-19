@@ -30,6 +30,8 @@ run() {
     else
         echo "Same components, nothing to be installed"
     fi
+    
+    copy_lib_from_cache
     write_php_ini $@
 }
 
