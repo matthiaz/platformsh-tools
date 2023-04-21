@@ -115,6 +115,24 @@ You don't have to download it, you can simply pipe the script straight to curl a
 -------
 
 
+### add_multiple_variables.sh
+This script can be used to qucikly add lots of env variables without having to wait for each deploy
+
+
+#### examples
+
+git clone the repository, you can then run 
+
+`bash add_multiple_variables.sh PROJECT_ID ENVIRONMENT_TO_REDEPLOY 'var1=val1,var2=val2,var3=val3' VARIABLE_LEVEL (project or environment=default)`
+
+
+`bash add_multiple_variables.sh xj2nccsddc57w master 'var1=val1,var2=val2,var3=val3' project` project level variables
+`bash add_multiple_variables.sh xj2nccsddc57w master 'var1=val1,var2=val2,var3=val3' project` environment level variables
+
+
+-------
+
+
 ### add_multiple_domains.sh
 This script can be used to qucikly add lots of domains without having to wait for each deploy
 

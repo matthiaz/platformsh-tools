@@ -74,6 +74,6 @@ if [ "$ITEMS" = "" ]; then
 fi
 
 
-run_command "$ITEMS"
+run_command "$ITEMS" "$KEEP_ENVIRONMENT"
 cancel_all_activities
 platform redeploy -p $PROJECT_ID -e $ENVIRONMENT --yes
