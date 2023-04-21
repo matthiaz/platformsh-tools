@@ -17,17 +17,17 @@ cancel_all_activities() {
 }
 
 run_command() {
-    arr_items=($(echo $1 | tr "," "\n"))
+    IFS=','; arr_items=($1); unset IFS;
 
     for item in "${arr_items[@]}"
     do
-        echo "$COMMAND $item"
-        platform $COMMAND -p $PROJECT_ID $item --no-wait --yes
+        echo "Running command: platform $COMMAND -p $PROJECT_ID $item --no-wait --yes $EXTRA"
+        platform $COMMAND -p $PROJECT_ID $item --no-wait --yes $EXTRA
     done
 }
 
 
-while getopts p:e:r:d:c: option
+while getopts p:e:r:d:c:z: option
 do
 case "${option}"
 in
@@ -35,6 +35,7 @@ p) PROJECT_ID=${OPTARG};;
 e) ENVIRONMENT=${OPTARG};;
 d) ITEMS=${OPTARG};;
 c) COMMAND=${OPTARG};;
+z) EXTRA=${OPTARG};;
 
 esac
 done
@@ -51,11 +52,28 @@ if [ "$COMMAND" = "" ]; then
     help
 fi
 
+if [[ "$ITEMS" == *"="* ]]; then
+    # make name=value -> --name=$name --value=$value
+    arr_items=($(echo "$ITEMS" | tr "," "\n"))
+
+    ITEMS=""
+    for item in "${arr_items[@]}"
+    do
+        # split the key=value into an array
+        IFS='='; arrItem=($item); unset IFS;
+
+        item_name="${arrItem[0]}"
+        item_value="${arrItem[1]}"
+
+        ITEMS="$ITEMS --name=$item_name --value=\"$item_value\","
+    done
+fi
+
 if [ "$ITEMS" = "" ]; then
     help
 fi
 
 
-run_command $ITEMS
+run_command "$ITEMS"
 cancel_all_activities
 platform redeploy -p $PROJECT_ID -e $ENVIRONMENT --yes
