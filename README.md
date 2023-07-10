@@ -198,3 +198,28 @@ hooks:
         bash install_brew_packages.sh duf lnav
 ```
 
+### Autoban in fastly
+
+This script allows you to syncronize a database table with banned ips, with your fastly CDN
+it allows you to easily ban_ips from your application.
+Prerequisites:
+
+- environment variables FASTLY_API_TOKEN and FASTLY_SERVICE_ID need to be set (should be done already but double check)
+- ensure that you change TABLE_TO_GET_IPS_FROM in the script to the correct table name
+
+Triggering it can be done manually
+
+```
+bash ./autoban_in_fastly
+```
+
+Or via a cron script every x minutes
+
+```
+crons:
+     autoban:
+         spec: '*/13 * * * *'
+         commands:
+             start: ./autoban_in_fastly.sh
+         shutdown_timeout: 31
+```
