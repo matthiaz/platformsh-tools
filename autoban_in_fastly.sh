@@ -38,7 +38,7 @@ curl -s -H "Fastly-Key: $FASTLY_API_TOKEN" \
 ACL_RULE_NAME="Generated_by_IP_block_list"
 # Need to fetch its ID before we can find its content.
 ACL_ID=$(curl -s -H "Fastly-Key: $FASTLY_API_TOKEN" "https://api.fastly.com/service/${FASTLY_SERVICE_ID}/version/${FASTLY_SERVICE_VERSION}/acl/${ACL_RULE_NAME}" | jq -r ".id")
-CURRENTLY_BLOCKED_IPS=$(curl -s -H "Fastly-Key: $FASTLY_API_TOKEN" "https://api.fastly.com/service/${FASTLY_SERVICE_ID}/acl/${ACL_ID}/entries" | jq -r '.[].ip + " " + .[].comment' | xargs)
+CURRENTLY_BLOCKED_IPS=$(curl -s -H "Fastly-Key: $FASTLY_API_TOKEN" "https://api.fastly.com/service/${FASTLY_SERVICE_ID}/acl/${ACL_ID}/entries" | jq -r '.[].ip' | xargs)
 
 read -a array <<< $CURRENTLY_BLOCKED_IPS
 echo "Current IPS already blocked: ${#array[@]}"
@@ -63,7 +63,7 @@ for IP_TO_BAN in $IPS_TO_BAN
 do
     JUSTIFIED_IP=$(printf '%-17s' "$IP_TO_BAN")
     # check if the IP is already banned
-    if [[ "$IP_TO_BAN" == *"$CURRENTLY_BLOCKED_IPS"* ]]; then
+    if [[ ! " $CURRENTLY_BLOCKED_IPS " =~ " $IP_TO_BAN " ]]; then
         echo "Adding   $JUSTIFIED_IP to block list"
 
         # add each ip found in `ban_ip`
