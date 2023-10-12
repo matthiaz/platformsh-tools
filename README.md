@@ -40,7 +40,7 @@ hooks:
     build: |
         set -e  
         chmod +x pecl  
-        pecl install grpc
+        ./pecl install grpc
 ```
   
 It will automatically add a /app/php.ini with the extension requested. First builds will be slow since it compiles the package, but subsequent builds will be cached in PLATFORM_CACHE_DIR automatically.
