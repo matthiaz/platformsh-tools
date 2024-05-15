@@ -223,3 +223,19 @@ crons:
              start: ./autoban_in_fastly.sh
          shutdown_timeout: 31
 ```
+
+### Block AI bots to robots.txt
+
+The `add_ai_bots_to_robots_txt.sh` script appends known AI bots to the robots.txt and can simply be added to your build hook.
+
+```
+hooks:
+    build: |
+        set -e
+        bash add_ai_bots_to_robots_txt.sh
+```
+
+AI is cool and all, but many of these AI bots use very agressive crawlers that actively take down websites due to the amount of requests they send. Even if your site is able to handle the requests, you are paying server resources to feed them content that you created and they give nothing back. They are not search engine bots, they will not be sending traffic to your site in any way in the future.
+
+Many customers have asked to block them. And you can, but one quick easy win is to ensure that your robots.txt file is up to date and tells them correctly not to browse your site.
+
