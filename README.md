@@ -183,7 +183,7 @@ git clone the repository, you can then run
 
 [brew.sh](https://formulae.brew.sh/formula-linux/) is a package manager specifically for macos, but it can also be used to install packages on linux. This allows you to install all sorts of things fairly easy within in the build hook.
 
-All you have to do is copy the `install_brew_packages.sh` file into the root of your project (where your `.platform.app.yaml` lives) and then you can call it in the build hook. The script takes 1 or more arguments. Simply specify the packages you want to install.
+All you have to do is copy the [install_brew_packages.sh](https://github.com/matthiaz/platformsh-tools/blob/master/install_brew_packages.sh) file into the root of your project (where your `.platform.app.yaml` lives) and then you can call it in the build hook. The script takes 1 or more arguments. Simply specify the packages you want to install.
 
 Building from source with brew is rather slow, but the script will automatically use the cache folder. This will ensure that the subsequent builds are fast.
 
@@ -226,7 +226,7 @@ crons:
 
 ### Block AI bots to robots.txt
 
-The `add_ai_bots_to_robots_txt.sh` script appends known AI bots to the robots.txt and can simply be added to your build hook.
+The [add_ai_bots_to_robots_txt.sh](https://github.com/matthiaz/platformsh-tools/blob/master/add_ai_bots_to_robots_txt.sh) script appends known AI bots to the robots.txt and can simply be added to your build hook.
 
 ```
 hooks:
