@@ -239,3 +239,26 @@ AI is cool and all, but many of these AI bots use very agressive crawlers that a
 
 Many customers have asked to block them. And you can, but one quick easy win is to ensure that your robots.txt file is up to date and tells them correctly not to browse your site.
 
+
+### get_resources
+
+[get_resources.sh](https://github.com/matthiaz/platformsh-tools/blob/master/get_resources.sh) helps with diagnosing how much resources are allocated to all containers.
+
+Usage: `get_resources.sh <projectid> <environment>`
+
+Example:
+```
+bash get_resources.sh y3dnj3qm242nq master
+
+Service                       	cpu	mem	disk	
+-------                       	---	---	----	
+
+drupal                        	0.40	128	12021	
+cache                         	0.08	256	0	
+db                            	0.25	288	15045	
+ 
+-------                       	---	---	----	
+Total                         	0.73	672	27066	
+Plan:
+    production: { legacy_development: false, max_cpu: 0.96, max_memory: 768, max_environments: 1 }
+```
