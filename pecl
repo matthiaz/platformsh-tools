@@ -79,7 +79,7 @@ install_component() {
   pwd
   echo "Run phpize"
   phpize
-  ln -sf /usr/share/libtool/build-aux/ltmain.sh build/ltmain.sh
+  libtoolize --force --copy # or ln -sf /usr/share/libtool/build-aux/ltmain.sh build/ltmain.sh
   ln -sf /usr/share/misc/config.guess build/config.guess
   ln -sf /usr/share/misc/config.sub build/config.sub
   ./configure
