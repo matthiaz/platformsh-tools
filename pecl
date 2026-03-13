@@ -79,6 +79,7 @@ install_component() {
   pwd
   echo "Run phpize"
   phpize
+  autoreconf -fi
   ./configure
   make
 
