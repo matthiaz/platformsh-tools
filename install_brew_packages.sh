@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# @see https://gist.github.com/robin-a-meade/58d60124b88b60816e8349d1e3938615
+set -euo pipefail
+
 run() {
     # Run the compilation process.
 
@@ -56,8 +59,8 @@ install_brew() {
     echo "Installing homebrew"
     mkdir -p $PLATFORM_APP_DIR/.linuxbrew
 
-    echo "Downloading tarball from master repository"
-    curl -SsL https://github.com/Homebrew/brew/tarball/master -o brew.tar.gz
+    echo "Downloading tarball from main repository"
+    curl -SsL https://github.com/Homebrew/brew/tarball/main -o brew.tar.gz
     
     echo "Unpacking into .linuxbrew folder"
     tar xzf brew.tar.gz --strip-components 1 -C $PLATFORM_APP_DIR/.linuxbrew/
