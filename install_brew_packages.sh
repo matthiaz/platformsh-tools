@@ -47,6 +47,9 @@ run() {
 
 copy_lib_to_cache() {
     echo "Copy to cache... #files copied: "
+    # Ensure the cache directory is cleared before copying to avoid
+    # errors when adding/removing packages.
+    rm -rf "$PLATFORM_CACHE_DIR/.linuxbrew"
     cp -Rvf $PLATFORM_APP_DIR/.linuxbrew $PLATFORM_CACHE_DIR | wc -l
 }
 
